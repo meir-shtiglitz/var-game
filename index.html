@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>var</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.15.5/sweetalert2.css" integrity="sha512-WfDqlW1EF2lMNxzzSID+Tp1TTEHeZ2DK+IHFzbbCHqLJGf2RyIjNFgQCRNuIa8tzHka19sUJYBO+qyvX8YBYEg==" crossorigin="anonymous" />
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.15.5/sweetalert2.min.js" integrity="sha512-+uGHdpCaEymD6EqvUR4H/PBuwqm3JTZmRh3gT0Lq52VGDAlywdXPBEiLiZUg6D1ViLonuNSUFdbL2tH9djAP8g==" crossorigin="anonymous"></script>
+    <style>
+        /* loader won */
+        body{
+            background-color: #23a30cba;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .loader_parent{
+           pointer-events: none;
+           display: none;
+        }
+
+        .loader_parent .play_again{
+            z-index: 5;
+            position: absolute;
+            pointer-events: all;
+            top: 90%;
+            width: 100%;
+            text-align: center;
+            margin: auto;
+        }
+
+        .loader_parent .play_again a{
+            text-decoration: none;
+            padding: 5px 20px;
+            display: block;
+            border-radius: 30px;
+            background-color: rgb(70, 5, 5);
+            color: white;
+            width: 100px;
+            margin: auto;
+            font-size: 20px;
+        }
+        
+        .loader_parent h2{
+            text-align: center;
+            margin-bottom: -40px;
+            margin-left: 30px;
+            color: rgb(70, 5, 5);
+            z-index: 6;
+            position: relative;
+        }
+        
+        .swal_text, .swal_text h4{
+            direction: rtl;
+        }
+
+        .field {
+            display: flex;
+            text-align: center;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 600px;
+            position: relative;
+        }
+        #fight{
+            margin: -1% auto 0;
+            background-image: url('images/yellow_back.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 120px;
+            width: 80px;
+            flex-basis: 20%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-family: sans-serif;
+            font-weight: 900;
+            color: black;
+            cursor: pointer;
+            line-height: 100px;
+        }
+
+        .bank {
+            flex-basis: 20%;
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .bank2, .bank1 {
+            flex-basis: 8%;
+            border-radius: 10px;
+            background-image: url('images/red_back.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-size: 35px;
+            font-weight: 900;
+        }           
+
+        #player1{
+            flex-basis: 20%;
+        }
+        #player2{
+            margin-top: 1%;
+           flex-basis: 40%;
+        }
+
+        #placeHolder{
+            margin-top: -1%;
+            height: 120px;
+            display: none;
+        }
+
+        #play{
+            margin: -1% auto 0;
+            background-image: url(images/purple_back.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 120px;
+            width: 80px;
+            flex-basis: 20%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-family: sans-serif;
+            font-weight: 900;
+            color: black;
+            cursor: pointer;
+        }
+        img{
+            position: relative;
+            height: 100px; 
+            display: block;
+            margin: auto;
+        }
+
+        @media only screen and (max-width: 600px){
+            #fight, #play{
+                font-size: 16px;
+                line-height: 110px;
+            }
+
+            .bank2, .bank1 {
+                flex-basis: 15%;
+            }
+        }
+  
+    </style>
+</head>
+<body>
+    <div class="loader_parent won">
+        <h2> !!!כל הכבוד ניצחת</h2>
+        <div class="play_again"><a class="btn btn-primary" href="/">שחק שוב</a></div>
+        <div class="rap_frame"><iframe src="https://giphy.com/embed/3JTrNZgdf4LJGNUN1a" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+    </div>
+    <div class="loader_parent loos">
+        <h2>אויש הפסדת</h2>
+        <div class="play_again"><a class="btn btn-primary" href="/">שחק שוב</a></div>
+        <div class="rap_frame"><iframe src="https://giphy.com/embed/2rAIp46q7RjRE5mjHN" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+    </div>
+    <div class="field">
+        <div id="player2"></div>
+        <div class="bank">
+            <div class="bank2"></div>
+            <div class="bank1"></div>
+        </div>
+         <div id="placeHolder"></div><!--שומר שהקלפים לא ירדו במן מלחמה -->
+        <div id="player1"></div>
+        <a id="play">שחק</a>
+        <a id="fight">מלחמה</a>
+    </div>
+    <div id="cards1">
+
+    </div>
+
+    <div>
+        <ol id="cards2"></ol>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            //יצירת חפיסת הקלפים
+            var cards = [];
+            var type = 'H.png';
+            for(count = 2; count < 15; count++){
+                cards.push({num: count, src: count+type});
+                if(count == 14 && type == 'H.png'){
+                    count = 1;
+                    type = 'D.png';
+                }
+                if(count == 14 && type == 'D.png'){
+                    count = 1;
+                    type = 'C.png';
+                }
+                if(count == 14 && type == 'C.png'){
+                    count = 1;
+                    type = 'S.png';
+                }
+            }
+            //חלוקה ל2 שחקנים
+            var player1 = [];
+            var player2 = [];
+            var bank1 = [];
+            var bank2 = [];
+            for(count = 1; count < 27; count++){
+                var rand = Math.floor(Math.random() * cards.length);
+                player2.push(cards[rand]);
+                cards.splice(rand, 1);
+            }
+            player1 = cards;
+            $('.bank1').html(player1.length + bank1.length);
+            $('.bank2').html(player2.length + bank2.length);
+            /*הצגת הקלפים
+            $.each(player1, function(){
+                $('#cards1').append(this.num + ' ' + this.src + '</br>');
+            })
+            
+            $.each(player2, function(){
+                $('#cards2').append('<li rel="' + this.num + '"><img src="images/' + this.src + '"</li></br>');
+            })
+            */
+
+            //המשחק עצמו
+            var fight_num = 4;
+            write_fight_num();
+            function write_fight_num(){
+                swal.fire({
+                    input: 'number',
+                    title: 'לפני שנתחיל קצת חוקים',
+                    html: '<p class="swal_text">במשחק מלחמה כל שחקן מניח קלף והקלף הגבוה לוקח את הנמוך, </br>המנצח הוא מי שזכה בכל הקלפים,</br> במקרה ושני הקלפים שווים עושים מלחמה: כל שחקן מניח מספר קלפים (ברירת המחדל היא ארבעה) ובסיום  המלחמה השחקן בעל קלף הגבוה מבין שתי הערימות לוקח את שתיהן, </br> <h4>?אז כמה קלפים תרצו להניח במקרה של מלחמה</h4></p>',
+                    confirmButtonText: 'אישור'
+                }).then(function(result){
+                    if(!result.value || result.value == 0) return write_fight_num();
+                    fight_num = result.value;
+                });
+            }
+           
+            var card1 = '';
+            var card2 = '';
+            $('#play').on('click', function(){
+                clearTimeout(cards_moov);
+                if(player1.length < 1){
+                    if(bank1.length < 1){
+                        lous();
+                    }
+                    player1 = bank1;
+                    bank1 = [];
+                }
+                if(player2.length < 1){
+                    if(bank2.length < 1){
+                        win();
+                    }
+                    player2 = bank2;
+                    bank2 = [];
+                }
+                var rand1 = Math.floor(Math.random() * player1.length);
+                var rand2 = Math.floor(Math.random() * player2.length);
+                card1 = player1[rand1];
+                card2 = player2[rand2];
+                $('#player1').html('<img src="images/' + card1.src + '" />');
+                $('#player2').html('<img src="images/' + card2.src + '" />');
+                player1.splice(rand1, 1);
+                player2.splice(rand2, 1);
+                
+                    if(card1.num > card2.num){
+                        bank1.push(card1, card2);
+                        moov_cards('+=600px');
+                        //$('#player1').html('');
+                        //$('#player2').html('');
+                    } if(card1.num < card2.num){
+                        bank2.push(card1, card2);
+                        moov_cards('-=600px');
+                    } if(card1.num == card2.num){
+                        $('#play').hide();
+                        $('#fight').show();
+                    }
+
+                    
+            })
+            var cards_moov;
+            function moov_cards(side){
+               cards_moov = setTimeout(function(){
+                    $('#player1 img').animate({
+                        'top': '-=170px',
+                        'left': side
+                    },'slow').promise().done(function(){
+                        $('#player1 img').hide();
+                    });
+                    $('#player2 img').animate({
+                        'top': '+=170px',
+                        'left': side
+                    },'slow').promise().done(function(){
+                        $('#player2 img').hide();
+                    });
+                    $('.bank1').html(player1.length + bank1.length);
+                    $('.bank2').html(player2.length + bank2.length);
+                },2000)
+            }
+            var fight_cards = [];
+            var card_now1 = '';
+            var card_now2 = '';
+            var stop_func;
+            var fightTimeOut;
+            function fighter(timeout){
+                // if(stop_func == true){
+                //     alert('llld');
+                //     $('#play').show();
+                //     fight_cards = [];
+                //     clearTimeout(fightTimeOut);
+                // } else{
+                    fightTimeOut = setTimeout(function(){
+                    
+                        $('.bank1').html(player1.length + bank1.length);
+                        $('.bank2').html(player2.length + bank2.length);
+                            //בדיקה אם אין מספיק קלפי למלחמה לאחד השחקנים ופעולה לםי זה
+                            if(player1.length < 1){
+                                if(bank1.length < 1){
+                                    if(card_now1.num > card_now2.num){
+                                        moov_cards('+=600px');
+                                        for(push = 0; push < fight_cards.length; push++){
+                                            bank1.push(fight_cards[push]);
+                                        }
+                                        // alert();
+                                        // stop_func = true;
+                                        // clearTimeout(fightTimeOut);
+                                        // $('#play').show();
+                                         fight_cards = [];
+                                        return;
+                                    } if(card_now1.num < card_now2.num){
+                                        moov_cards('-=600px');
+                                        lous();
+                                    }
+                                } else{
+                                    player1 = bank1;
+                                    bank1 = [];
+                                }
+                                
+                            }
+                            if(player2.length < 1){
+                                if(bank2.length < 1){
+                                    if(card_now1.num > card_now2.num){
+                                            moov_cards('+=600px');
+                                            win();
+                                    } if(card_now1.num < card_now2.num){
+                                        moov_cards('-=600px');
+                                        for(push = 0; push < fight_cards.length; push++){
+                                            bank2.push(fight_cards[push]);
+                                        }
+                                        // alert();
+                                        // stop_func = true;
+                                        // clearTimeout(fightTimeOut);
+                                        // $('#play').show();
+                                         fight_cards = [];
+                                        return;
+                                    }
+                                } else{
+                                    player2 = bank2;
+                                    bank2 = []; 
+                                }
+                                
+                            }
+                            //סוף בדיקה
+                            
+
+                            var rand1 = Math.floor(Math.random() * player1.length);
+                            var rand2 = Math.floor(Math.random() * player2.length);
+                            fight_cards.push(player1[rand1]);
+                            fight_cards.push(player1[rand1]);
+                            card_now1 = player1[rand1];
+                            card_now2 = player2[rand2];
+                            console.log(card_now1.src);
+                            console.log(card_now2.src);
+                            $('#player1').html('<img src="images/' + card_now1.src + '" />');
+                            $('#player2').html('<img src="images/' + card_now2.src + '" />');
+                            player1.splice(rand1, 1);
+                            player2.splice(rand2, 1);
+                            
+                            
+                            if(timeout == fight_num+'000'){
+                                if(card_now1.num > card_now2.num){
+                                    moov_cards('+=600px');
+                                    for(push = 0; push < fight_cards.length; push++){
+                                        bank1.push(fight_cards[push]);
+                                    }
+                                    fight_cards = [];
+                                    setTimeout(function(){
+                                        $('#play').show();
+                                        $('#placeHolder').hide();
+                                    },2000);
+                                } if(card_now1.num < card_now2.num){
+                                    moov_cards('-=600px');
+                                    for(push = 0; push < fight_cards.length; push++){
+                                        bank2.push(fight_cards[push]);
+                                        setTimeout(function(){
+                                            $('#play').show();
+                                            $('#placeHolder').hide();
+                                        },2000);
+                                    }
+                                    fight_cards = [];
+                                } if(card_now1.num == card_now2.num){
+                                    $('#fight').css("display", "flex");
+                                }
+                                
+                            }
+                        
+                        },timeout)
+                //}
+            }
+            //מלחמה
+           
+            $('#fight').on('click', function(){
+                $('#placeHolder').show();
+                $('#fight').hide();
+                fight_cards .push(card1, card2);
+                //stop_func = false;
+                 for(let fight = 1; fight <= fight_num; fight++){
+                     fighter(fight+'000');
+                  }
+             })
+
+            function win(){
+                $('.field').hide();
+                $('.won').show();
+
+            }
+            function lous(){
+                $('.field').hide();
+                $('.loos').show();
+            }
+
+
+
+
+        })
+    </script>
+</body>
+
+</html>
